@@ -2,14 +2,17 @@ package com.example.android.homework04;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -23,6 +26,8 @@ public class DisplayRecipeFragment extends Fragment {
     RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
     static ArrayList<Recipe> arrayList;
+
+    Button finishedButton;
 
     public DisplayRecipeFragment() {
         // Required empty public constructor
@@ -52,10 +57,6 @@ public class DisplayRecipeFragment extends Fragment {
         fragment.setArguments(args);
 
         arrayList = args.getParcelableArrayList(ARG_PARAM1);
-
-        for (Recipe x : arrayList) {
-            Log.d("mJJJmmm " , " ddd" + x.getTitle() );
-        }
         return fragment;
     }
 
@@ -76,7 +77,19 @@ public class DisplayRecipeFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         // Inflate the layout for this fragment
         super.onActivityCreated(savedInstanceState);
+
+        finishedButton = getActivity().findViewById(R.id.buttonFinished);
+
+        finishedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("hi", "finished handle");
+                getActivity().getSupportFragmentManager().popBackStack("SearchFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
+        });
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,5 +98,4 @@ public class DisplayRecipeFragment extends Fragment {
 
         return inflater.inflate(R.layout.fragment_display_recipe, container, false);
     }
-
 }

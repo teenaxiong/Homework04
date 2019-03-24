@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -91,11 +93,17 @@ public class SearchFragment extends Fragment  implements SearchAsync.SearchInter
 
     @Override
     public void handleRecipeResult(ArrayList<Recipe> recipes) {
+
+        if(recipes.size() == 0){
+            getActivity().getSupportFragmentManager().popBackStack("SearchFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            Toast.makeText(getActivity(), "Sorry, No Recipe found.", Toast.LENGTH_SHORT).show();
+            Log.d("hi", "in handle");
+        }else{
        //DisplayRecipeFragment.newInstance(recipes)
+            Log.d("hi", "outhandle");
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container,DisplayRecipeFragment.newInstance(recipes), "DisplayFragment")
-                .addToBackStack("SearchFragment").commit();
-
+                .addToBackStack("SearchFragment").commit();}
     }
 
 }
