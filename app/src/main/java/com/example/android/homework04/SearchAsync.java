@@ -45,8 +45,6 @@ public class SearchAsync extends AsyncTask<String, Integer, ArrayList<Recipe>> {
 
         String encodedURL = requestParameter.getEncordedURL(url);
 
-        Log.d("hi " , "hellooooooooo" +encodedURL);
-
         HttpURLConnection connection = null;
         ArrayList<Recipe> result = new ArrayList<>();
         String urlString = null;

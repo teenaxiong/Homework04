@@ -105,10 +105,8 @@ public class SearchFragment extends Fragment  implements SearchAsync.SearchInter
         if(recipes.size() == 0){
             getActivity().getSupportFragmentManager().popBackStack("SearchFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             Toast.makeText(getActivity(), "Sorry, No Recipe found.", Toast.LENGTH_SHORT).show();
-            Log.d("hi", "in handle");
         }else{
        //DisplayRecipeFragment.newInstance(recipes)
-            Log.d("hi", "outhandle");
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container,DisplayRecipeFragment.newInstance(recipes), "DisplayFragment")
                 .addToBackStack("SearchFragment").commit();}

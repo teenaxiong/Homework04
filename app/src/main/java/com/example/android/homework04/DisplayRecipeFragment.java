@@ -83,7 +83,6 @@ public class DisplayRecipeFragment extends Fragment {
         finishedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("hi", "finished handle");
                 getActivity().getSupportFragmentManager().popBackStack("SearchFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
         });

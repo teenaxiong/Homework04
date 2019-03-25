@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,43 @@ public class SearchAdapter extends RecyclerView.Adapter <SearchAdapter.ViewHolde
             viewHolder.item.setText(null);
         }
 
+        viewHolder.item.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                arrayList.set(viewHolder.getAdapterPosition(), s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        viewHolder.floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = viewHolder.getAdapterPosition();
+
+                if(arrayList.size()!=5) {
+                    if(!arrayList.get(position).equals("")){
+                        if (position == arrayList.size() - 1) {
+                            viewHolder.item.setEnabled(false);
+                            // FloatingActionButton a = view.findViewById(R.id.floatingActionButton);
+                            viewHolder.floatingActionButton.setImageResource(R.drawable.delete);
+                           arrayList.add(position + 1, "");
+                            notifyItemInserted(position + 1);
+                        } else {
+                            viewHolder.item.setEnabled(true);
+                            viewHolder.floatingActionButton.setImageResource(R.drawable.add);
+                            arrayList.remove(position);
+                            notifyItemRemoved(position);
+                        }
+                    }else   Toast.makeText(viewHolder.item.getContext(), "Please add an ingrediant", Toast.LENGTH_SHORT).show();}
+            }
+        });
     }
 
 
@@ -61,43 +99,6 @@ public class SearchAdapter extends RecyclerView.Adapter <SearchAdapter.ViewHolde
             super(itemView);
             item = itemView.findViewById(R.id.item);
             floatingActionButton = itemView.findViewById(R.id.floatingActionButton);
-
-            floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-
-                    if(arrayList.size()!=5) {
-                        if (position == arrayList.size() - 1) {
-                            arrayList.add(position + 1, "");
-                            notifyItemInserted(position + 1);
-                            FloatingActionButton a = view.findViewById(R.id.floatingActionButton);
-                            a.setImageResource(R.drawable.delete);
-                            item.setEnabled(false);
-                        } else {
-                            arrayList.remove(position);
-                            notifyItemRemoved(position);
-                        }
-                    }
-                }
-            });
-            item.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    arrayList.set(getAdapterPosition(), s.toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                }
-            });
-
-
-
         }
     }
 
