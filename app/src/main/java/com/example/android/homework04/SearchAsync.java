@@ -68,7 +68,7 @@ public class SearchAsync extends AsyncTask<String, Integer, ArrayList<Recipe>> {
 
                     if(resultObject.has("href")){
                         recipe.setHref(resultObject.getString("href"));
-                    }else     recipe.setHref(resultObject.getString(null));
+                    }else     recipe.setHref(resultObject.getString(""));
 
                     if(resultObject.has("ingredients")){
                         recipe.setIngredients(resultObject.getString("ingredients"));
@@ -77,7 +77,7 @@ public class SearchAsync extends AsyncTask<String, Integer, ArrayList<Recipe>> {
 
                     if(resultObject.has("thumbnail")){
                         recipe.setThumbnail(resultObject.getString("thumbnail"));
-                    }else  recipe.setThumbnail(resultObject.getString("n/a"));
+                    }else  recipe.setThumbnail(resultObject.getString(""));
 
                     result.add(recipe);
                     publishProgress(x);

@@ -32,6 +32,7 @@ public class SearchFragment extends Fragment  implements SearchAsync.SearchInter
     String dishName;
     SearchAdapter searchAdapter;
     Fragment fragment;
+    EditText dishNameEditText;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -56,8 +57,7 @@ public class SearchFragment extends Fragment  implements SearchAsync.SearchInter
         recyclerView.setAdapter(mAdapter);
         // Inflate the layout for this fragment
         super.onActivityCreated(savedInstanceState);
-        EditText dishNameEditText = getActivity().findViewById(R.id.dishName);
-        dishName = dishNameEditText.getText().toString();
+        dishNameEditText = getActivity().findViewById(R.id.dishName);
 
         dishNameEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -78,9 +78,17 @@ public class SearchFragment extends Fragment  implements SearchAsync.SearchInter
             @Override
             public void onClick(View view) {
                 //searchAdapter = new SearchAdapter(this, arrayList);
-                SearchAsync searchAsync = new SearchAsync(fragment, arrayList, dishName);
+                dishName = dishNameEditText.getText().toString();
 
-                searchAsync.execute();
+                if(dishName.equals("")) {
+                    dishNameEditText.setError("Please enter a dish name");
+                    Toast.makeText(getActivity(), "Please enter a dish name", Toast.LENGTH_SHORT).show();
+                }else if(arrayList.size()==1){
+                    Toast.makeText(getActivity(), "Please enter an ingrediant", Toast.LENGTH_SHORT).show();
+                }else {
+                    SearchAsync searchAsync = new SearchAsync(fragment, arrayList, dishName);
+                    searchAsync.execute();
+                }
             }
         });
     }

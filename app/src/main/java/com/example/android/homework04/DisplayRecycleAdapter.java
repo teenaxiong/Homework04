@@ -1,5 +1,8 @@
 package com.example.android.homework04;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -17,10 +20,12 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.net.URI;
 import java.util.ArrayList;
 
 public class DisplayRecycleAdapter extends RecyclerView.Adapter <DisplayRecycleAdapter.ViewHolder> {
     ArrayList<Recipe>arrayList;
+
     public DisplayRecycleAdapter(ArrayList<Recipe> arrayList) {
         this.arrayList = arrayList;
     }
@@ -38,8 +43,10 @@ public class DisplayRecycleAdapter extends RecyclerView.Adapter <DisplayRecycleA
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         viewHolder.textViewTitle.setText(arrayList.get(i).getTitle());
         viewHolder.textViewIngrediants.setText(arrayList.get(i).getIngredients());
-        Picasso.get().load(arrayList.get(i).getThumbnail()).into(viewHolder.imageView);
-        viewHolder.textViewURL.setText(arrayList.get(i).getHref());
+        if(!viewHolder.imageView.equals("")){
+            Picasso.get().load(arrayList.get(i).getThumbnail()).into(viewHolder.imageView);
+        }
+
 
     }
 
@@ -59,6 +66,7 @@ public class DisplayRecycleAdapter extends RecyclerView.Adapter <DisplayRecycleA
              textViewURL = itemView.findViewById(R.id.textViewURL);
              textViewIngrediants = itemView.findViewById(R.id.textViewIngrediants);
              imageView = itemView.findViewById(R.id.imageView);
+
 
         }
     }
