@@ -73,7 +73,7 @@ public class DisplayRecipeFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new DisplayRecycleAdapter(arrayList);
+        mAdapter = new DisplayRecycleAdapter(getActivity(), arrayList);
         recyclerView.setAdapter(mAdapter);
         // Inflate the layout for this fragment
         super.onActivityCreated(savedInstanceState);

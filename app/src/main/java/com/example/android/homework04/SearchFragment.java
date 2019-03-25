@@ -4,6 +4,7 @@ package com.example.android.homework04;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -99,10 +100,16 @@ public class SearchFragment extends Fragment  implements SearchAsync.SearchInter
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
-    @Override
+
     public void handleRecipeResult(ArrayList<Recipe> recipes) {
 
         if(recipes.size() == 0){
+            arrayList.clear();
+            arrayList.add("");
+            getActivity().findViewById(R.id.item).setEnabled(true);
+            FloatingActionButton f = getActivity().findViewById(R.id.floatingActionButton);
+            f.setImageResource(R.drawable.add);
+            mAdapter.notifyDataSetChanged();
             getActivity().getSupportFragmentManager().popBackStack("SearchFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             Toast.makeText(getActivity(), "Sorry, No Recipe found.", Toast.LENGTH_SHORT).show();
         }else{

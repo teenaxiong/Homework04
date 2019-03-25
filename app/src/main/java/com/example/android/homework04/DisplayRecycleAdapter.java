@@ -25,8 +25,10 @@ import java.util.ArrayList;
 
 public class DisplayRecycleAdapter extends RecyclerView.Adapter <DisplayRecycleAdapter.ViewHolder> {
     ArrayList<Recipe>arrayList;
+Context displayRecipeFragment;
 
-    public DisplayRecycleAdapter(ArrayList<Recipe> arrayList) {
+    public DisplayRecycleAdapter(Context displayRecipeFragment, ArrayList<Recipe> arrayList) {
+        this.displayRecipeFragment = displayRecipeFragment;
         this.arrayList = arrayList;
     }
 
@@ -46,6 +48,18 @@ public class DisplayRecycleAdapter extends RecyclerView.Adapter <DisplayRecycleA
         if(!viewHolder.imageView.equals("")){
             Picasso.get().load(arrayList.get(i).getThumbnail()).into(viewHolder.imageView);
         }
+
+        viewHolder.textViewURL.setText(arrayList.get(i).getHref());
+
+
+        viewHolder.textViewURL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = viewHolder.textViewURL.getText().toString();
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                displayRecipeFragment.startActivity(intent);
+            }
+        });
 
 
     }
